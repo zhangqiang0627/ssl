@@ -1,0 +1,21 @@
+<link rel='stylesheet' href='/stylesheets/index.css'/>
+<div class="bg-img">
+  <img src="/images/bg2.jpg" class="img-responsive" alt="">
+</div>
+<div class="text-center padding-t-15">
+  <span class="title">陕西物流学会会员申请后台管理</span>
+</div>
+
+<div class="container" style="margin-top: 9rem" id="app">
+  <form>
+    <div class="form-group">
+      <input type="text" class="form-control" maxlength="50" v-model="account" placeholder="请输入登录账号">
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" maxlength="50" v-model="password" placeholder="请输入登录密码">
+    </div>
+    <button type="button" class="btn btn-info btn-block" @click="onLogin()">登 录</button>
+  </form>
+</div>
+
+<script src="/javascripts/view/login.js"></script>

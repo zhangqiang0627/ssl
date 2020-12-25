@@ -1,0 +1,194 @@
+<div class="container margin-t-15 margin-b-15" id="app">
+  <div class="margin-b-15">
+    <h4 class="text-center" v-text="title"></h4>
+  </div>
+  <div class="card">
+    <div v-cloak class="company-member border-bottom-dashed" v-if="memberType == 'C'">
+      <label class="margin-b-15">基本信息</label>
+      <div class="form-group">
+        <span>状态：</span>
+        <span class="label"
+              :class="{'label-info':companyInfo.data_status == 'P', 'label-success':companyInfo.data_status == 'Y', 'label-warning':companyInfo.data_status == 'N'}"
+              v-text="companyInfo.data_status_text"></span>
+      </div>
+      <div class="form-group">
+        <span>单位名称：</span>
+        <span v-text="companyInfo.company_name"></span>
+      </div>
+      <div class="form-group">
+        <span>单位性质：</span>
+        <span v-text="companyInfo.company_type_text"></span>
+      </div>
+      <div class="form-group">
+        <span>营业执照编号：</span>
+        <span v-text="companyInfo.business_license_number"></span>
+      </div>
+      <div class="form-group">
+        <span>公司法人：</span>
+        <span v-text="companyInfo.company_owner"></span>
+      </div>
+      <div class="form-group">
+        <span>成立时间：</span>
+        <span v-text="companyInfo.establish_date"></span>
+      </div>
+      <div class="form-group">
+        <span>主管上级：</span>
+        <span v-text="companyInfo.company_leader"></span>
+      </div>
+      <div class="form-group">
+        <span>移动电话：</span>
+        <span v-text="companyInfo.cellphone"></span>
+      </div>
+      <div class="form-group">
+        <span>公司电话：</span>
+        <span v-text="companyInfo.company_telephone"></span>
+      </div>
+      <div class="form-group">
+        <span>公司邮箱：</span>
+        <span v-text="companyInfo.company_email"></span>
+      </div>
+      <div class="form-group">
+        <span>公司传真：</span>
+        <span v-text="companyInfo.company_fax"></span>
+      </div>
+      <div class="form-group">
+        <span>单位网址：</span>
+        <span v-text="companyInfo.company_home_page"></span>
+      </div>
+      <div class="form-group">
+        <span>单位地址：</span>
+        <span v-text="companyInfo.company_address"></span>
+      </div>
+      <div class="form-group">
+        <span>员工人数：</span>
+        <span v-text="companyInfo.staff_total"></span>
+      </div>
+      <div class="form-group">
+        <span>占地面积：</span>
+        <span v-text="companyInfo.floor_space"></span>
+      </div>
+      <div class="form-group">
+        <span>年营业额：</span>
+        <span v-text="companyInfo.turnover"></span>
+      </div>
+      <div class="form-group">
+        <span>固定资产：</span>
+        <span v-text="companyInfo.fixed_assets"></span>
+      </div>
+      <div class="form-group">
+        <span>主营业务：</span>
+        <span v-text="companyInfo.main_business"></span>
+      </div>
+      <div class="margin-t-25"></div>
+      <label class="margin-b-15">联系人信息</label>
+      <div class="form-group">
+        <span>联系人：</span>
+        <span v-text="companyInfo.contacts_name"></span>
+      </div>
+      <div class="form-group">
+        <span>手机号码：</span>
+        <span v-text="companyInfo.contacts_cellphone"></span>
+      </div>
+      <div class="form-group">
+        <span>职务：</span>
+        <span v-text="companyInfo.contacts_title"></span>
+      </div>
+      <div class="form-group">
+        <span>固定电话：</span>
+        <span v-text="companyInfo.contacts_tell"></span>
+      </div>
+      <div class="form-group">
+        <span>邮箱：</span>
+        <span v-text="companyInfo.contacts_email"></span>
+      </div>
+    </div>
+    <div v-cloak class="personal-member border-bottom-dashed" v-if="memberType == 'P'">
+      <label class="margin-b-15">基本信息</label>
+      <div class="form-group">
+        <span>状态：</span>
+        <span class="label"
+              :class="{'label-info':personalInfo.data_status == 'P', 'label-success':personalInfo.data_status == 'Y', 'label-warning':personalInfo.data_status == 'N'}"
+              v-text="personalInfo.data_status_text"></span>
+      </div>
+      <div class="form-group">
+        <span>姓名：</span>
+        <span v-text="personalInfo.full_name"></span>
+      </div>
+      <div class="form-group">
+        <span>性别：</span>
+        <span v-text="personalInfo.sex_text"></span>
+      </div>
+      <div class="form-group">
+        <span>文化程度：</span>
+        <span v-text="personalInfo.education_level_text"></span>
+      </div>
+      <div class="form-group">
+        <span>手机号码：</span>
+        <span v-text="personalInfo.cellphone"></span>
+      </div>
+      <div class="form-group">
+        <span>政治面貌：</span>
+        <span v-text="personalInfo.politics_type_text"></span>
+      </div>
+      <div class="form-group">
+        <span>微信号：</span>
+        <span v-text="personalInfo.wei_chat"></span>
+      </div>
+      <div class="form-group">
+        <span>邮箱：</span>
+        <span v-text="personalInfo.email"></span>
+      </div>
+      <div class="form-group">
+        <span>固定电话：</span>
+        <span v-text="personalInfo.telephone"></span>
+      </div>
+      <div class="form-group">
+        <span>工作单位：</span>
+        <span v-text="personalInfo.work_unit"></span>
+      </div>
+      <div class="form-group">
+        <span>职务：</span>
+        <span v-text="personalInfo.title"></span>
+      </div>
+      <div class="form-group">
+        <span>身份证号：</span>
+        <span v-text="personalInfo.identity_card_no"></span>
+      </div>
+      <div class="form-group">
+        <span>家庭住址：</span>
+        <span v-text="personalInfo.home_address"></span>
+      </div>
+      <div class="margin-t-25"></div>
+      <label class="margin-b-15">个人履历</label>
+      <div class="border-bottom-dashed" v-for="resume in personalInfo.resumeList">
+        <div class="form-group">
+          <span>起始日期：</span>
+          <span v-text="resume.fromDate"></span>
+        </div>
+        <div class="form-group">
+          <span>结束日期：</span>
+          <span v-text="resume.toDate"></span>
+        </div>
+        <div class="form-group">
+          <span>单位名称：</span>
+          <span v-text="resume.unitName"></span>
+        </div>
+        <div class="form-group">
+          <span>职务：</span>
+          <span v-text="resume.title"></span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6">
+        <button type="button" class="btn btn-danger btn-block" :disabled="dataStatus == 'N'" @click="onApprove('N')">驳回</button>
+      </div>
+      <div class="col-xs-6">
+        <button type="button" class="btn btn-success btn-block" :disabled="dataStatus == 'Y'"  @click="onApprove('Y')">通过</button>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" value="{{memberType}}" id="hidden_memberType">
+<input type="hidden" value="{{memberID}}" id="hidden_memberID">
+<script src="/javascripts/view/applyInfo.js"></script>

@@ -1,0 +1,70 @@
+<div class="container margin-t-15 margin-b-15">
+  <div class="margin-b-15">
+    <h5 class="text-center">
+      <span class="glyphicon glyphicon-ok icon-success"></span>&nbsp;
+      您的会员申请已提交！
+    </h5>
+  </div>
+  <div class="card margin-t-25" id="app">
+    <div v-if="memberType === 'C'">
+      <div class="margin-b-10">
+        <label class="control-label">单位：</label>
+        <span v-text="companyInfo.company_name"></span>
+      </div>
+      <div class="margin-b-10">
+        <label class="control-label">单位类型：</label>
+        <span v-text="companyInfo.company_type_text"></span>
+      </div>
+      <div class="margin-b-10">
+        <label class="control-label">法人：</label>
+        <span v-text="companyInfo.company_owner"></span>
+      </div>
+      <div class="margin-b-10">
+        <label class="control-label">联系人：</label>
+        <span v-text="companyInfo.contacts_name"></span>
+      </div>
+      <div class="margin-b-10">
+        <label class="control-label">练习电话：</label>
+        <span v-text="companyInfo.contacts_cellphone"></span>
+      </div>
+      <div class="margin-b-10">
+        <label class="control-label">申请时间：</label>
+        <span v-text="companyInfo.create_time"></span>
+      </div>
+      <div class="margin-b-10">
+        <label class="control-label">状态：</label>
+        <span class="label label-info" v-text="companyInfo.data_status_text"></span>
+      </div>
+    </div>
+    <div v-if="memberType === 'P'">
+      <div class="margin-b-10">
+        <label class="control-label">姓名：</label>
+        <span v-text="personalInfo.full_name"></span>
+      </div>
+      <div class="margin-b-10">
+        <label class="control-label">性别：</label>
+        <span v-text="personalInfo.sex_text"></span>
+      </div>
+      <div class="margin-b-10">
+        <label class="control-label">文化程度：</label>
+        <span v-text="personalInfo.education_level_text"></span>
+      </div>
+      <div class="margin-b-10">
+        <label class="control-label">手机号码：</label>
+        <span v-text="personalInfo.cellphone"></span>
+      </div>
+      <div class="margin-b-10">
+        <label class="control-label">申请时间：</label>
+        <span v-text="personalInfo.create_time"></span>
+      </div>
+      <div class="margin-b-10">
+        <label class="control-label">状态：</label>
+        <span v-text="personalInfo.data_status_text"></span>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" value="{{memberType}}" id="hidden_memberType">
+<input type="hidden" value="{{businessLicenseNumber}}" id="hidden_businessLicenseNumber">
+<input type="hidden" value="{{cellphone}}" id="hidden_cellphone">
+<script src="/javascripts/view/applyComplete.js"></script>

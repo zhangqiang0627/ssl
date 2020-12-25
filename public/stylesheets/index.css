@@ -1,0 +1,10 @@
+.bg-img {
+	position: absolute;
+	z-index: -999;
+}
+.title {
+	font-size: 2rem;
+	font-weight: bolder;
+	margin-top: 2rem;
+	color: #eafaff;
+}

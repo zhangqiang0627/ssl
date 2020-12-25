@@ -1,0 +1,124 @@
+<div class="container margin-t-15 margin-b-15">
+  <div class="margin-b-15">
+    <h4 class="text-center">陕西物流学会个人会员申请登记表</h4>
+  </div>
+  <form class="card" id="app">
+    <div class="form-group" :class="{'has-error has-feedback': fullNameIsValid == 'N'}">
+      <input type="text" class="form-control" maxlength="100" v-model="fullName" placeholder="请填写您的姓名（必填项）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="fullNameIsValid == 'N'"></span>
+      <span class="control-label" v-text="fullNameInValidMsg" v-if="fullNameIsValid == 'N'"></span>
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': sexIsValid == 'N'}">
+      <div class="dropdown" style="width: 100%">
+        <button class="btn btn-default dropdown-toggle" :class="{'has-error has-feedback': sexIsValid == 'N'}" style="width: 100%; text-align: left" type="button" data-toggle="dropdown">
+          <span v-text="sexText"></span>
+        </button>
+        <ul class="dropdown-menu" style="width: 100%;" aria-labelledby="dropdownMenu1">
+          <li value="M"><a href="javascript:" @click="onSexChange('M', '男')">男</a></li>
+          <li value="F"><a href="javascript:" @click="onSexChange('F', '女')">女</a></li>
+        </ul>
+      </div>
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="sexIsValid == 'N'"></span>
+      <span class="control-label" v-text="sexInValidMsg" v-if="sexIsValid == 'N'"></span>
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': educationLevelIsValid == 'N'}">
+      <div class="dropdown" style="width: 100%">
+        <button class="btn btn-default dropdown-toggle" style="width: 100%; text-align: left" :class="{'has-error has-feedback': educationLevelIsValid == 'N'}" type="button" data-toggle="dropdown">
+          <span v-text="educationLevelText"></span>
+        </button>
+        <ul class="dropdown-menu" style="width: 100%;" aria-labelledby="dropdownMenu1">
+          <li value="1"><a href="javascript:" @click="onEducationLevelChange('1', '初中及以下')">初中及以下</a></li>
+          <li value="2"><a href="javascript:" @click="onEducationLevelChange('2', '中专')">中专</a></li>
+          <li value="3"><a href="javascript:" @click="onEducationLevelChange('3', '高中')">高中</a></li>
+          <li value="4"><a href="javascript:" @click="onEducationLevelChange('4', '大专')">大专</a></li>
+          <li value="5"><a href="javascript:" @click="onEducationLevelChange('5', '本科')">本科</a></li>
+          <li value="6"><a href="javascript:" @click="onEducationLevelChange('6', '硕士')">硕士</a></li>
+          <li value="7"><a href="javascript:" @click="onEducationLevelChange('7', '博士')">博士</a></li>
+        </ul>
+      </div>
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="educationLevelIsValid == 'N'"></span>
+      <span class="control-label" v-text="educationLevelInValidMsg" v-if="educationLevelIsValid == 'N'"></span>
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': cellphoneIsValid == 'N'}">
+      <input type="tel" class="form-control" maxlength="11" v-model="cellphone" placeholder="请填写您的手机号码（必填项）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="cellphoneIsValid == 'N'"></span>
+      <span class="control-label" v-text="cellphoneInValidMsg" v-if="cellphoneIsValid == 'N'"></span>
+    </div>
+    <div class="form-group">
+      <div class="dropdown" style="width: 100%">
+        <button class="btn btn-default dropdown-toggle" style="width: 100%; text-align: left" type="button" data-toggle="dropdown">
+          <span v-text="politicsTypeText"></span>
+        </button>
+        <ul class="dropdown-menu" style="width: 100%;">
+          <li value="1"><a href="javascript:" @click="onPoliticsTypeChange('1', '群众')">群众</a></li>
+          <li value="2"><a href="javascript:" @click="onPoliticsTypeChange('2', '中共党员')">中共党员</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" maxlength="100" v-model="weiChat" placeholder="请填写您的微信号">
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': emailIsValid == 'N'}">
+      <input type="email" class="form-control" maxlength="100" v-model="email" placeholder="请填写您的电子邮箱">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="emailIsValid == 'N'"></span>
+      <span class="control-label" v-text="emailInValidMsg" v-if="emailIsValid == 'N'"></span>
+    </div>
+    <div class="form-group">
+      <input type="tel" class="form-control" maxlength="100" v-model="telephone" placeholder="请填写您的固定电话">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" maxlength="100" v-model="workUnit" placeholder="请填写您的工作单位">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" maxlength="100" v-model="title" placeholder="请填写您在单位的职务">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" maxlength="100" v-model="homeAddress" placeholder="请填写您的家庭住址">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" maxlength="100" v-model="identityCardNo" placeholder="请填写您的身份证号">
+    </div>
+    <div class="margin-t-15"></div>
+
+    <label >个人学习及工作履历</label>
+    <div :class="{'has-error': resumeIsEmpty == true}">
+      <span class="control-label font-color-error" v-if="resumeIsEmpty == true">请填写至少一条履历</span>
+    </div>
+
+    <div class="resume-list">
+      <div class="resume-item border-bottom-dashed" v-for="(item, index) in resumeArray">
+        <div class="form-group" :class="{'has-error has-feedback': item.fromDateIsEmpty == true}">
+          <label>起始日期</label>
+          <input type="date" class="form-control" v-model="item.fromDate">
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="item.fromDateIsEmpty == true"></span>
+          <span class="control-label" v-if="item.fromDateIsEmpty == true">请输入起始日期</span>
+        </div>
+        <div class="form-group" :class="{'has-error has-feedback': item.toDateIsEmpty == true}">
+          <label>结束日期</label>
+          <input type="date" class="form-control" v-model="item.toDate">
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="item.toDateIsEmpty == true"></span>
+          <span class="control-label" v-if="item.toDateIsEmpty == true">请输入结束日期</span>
+        </div>
+        <div class="form-group" :class="{'has-error has-feedback': item.unitNameIsEmpty == true}">
+          <label>单位名称</label>
+          <input type="text" class="form-control" maxlength="100" v-model="item.unitName" placeholder="请填写所在单位">
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="item.unitNameIsEmpty == true"></span>
+          <span class="control-label" v-if="item.unitNameIsEmpty == true">请输入单位名称</span>
+        </div>
+        <div class="form-group" :class="{'has-error has-feedback': item.titleIsEmpty == true}">
+          <label>职务</label>
+          <input type="text" class="form-control" maxlength="100" v-model="item.title" placeholder="请填写职务名称">
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="item.titleIsEmpty == true"></span>
+          <span class="control-label" v-if="item.titleIsEmpty == true">请输入职务</span>
+        </div>
+        <div class="form-group text-right">
+          <a href="javascript:" @click="onRemoveResume(index)">删除</a>
+        </div>
+      </div>
+    </div>
+    <a href="javascript:" @click="onAddResume()">+添加履历</a>
+    <div class="margin-t-15"></div>
+    <button type="button" class="btn btn-primary btn-block" id="btnSubmit" data-loading-text="提交中..." @click="onSubmit()">提交申请</button>
+  </form>
+</div>
+<script src="/javascripts/view/personalApply.js"></script>

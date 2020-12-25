@@ -1,0 +1,58 @@
+<div class="container" id="app">
+  <div class="row margin-t-15">
+    <div class="col-xs-12">
+      <div class="input-group">
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span v-text="memberTypeText"></span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="javascript:" @click="onMemberTypeChange('A', '全部')">全部</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="javascript:" @click="onMemberTypeChange('C', '企业申请')">企业申请</a></li>
+            <li><a href="javascript:" @click="onMemberTypeChange('P', '个人申请')">个人申请</a></li>
+          </ul>
+        </div>
+        <input type="search"
+               class="form-control"
+               v-model="searchContent"
+               @keyup.13="onSearch"
+               :disabled="memberType == 'A'"
+               :placeholder="placeholder">
+      </div>
+    </div>
+  </div>
+
+  <div class="apply-list margin-t-15" v-if="dataList.length > 0">
+    <div class="row border-bottom-dashed padding-b-15" v-for="data in dataList" @click="onShowDetail(data.member_id, data.member_type);">
+      <div class="col-xs-3">
+        <img src="/images/company.png" class="img-responsive" v-if="data.member_type == 'C'">
+        <img src="/images/personal.png" class="img-responsive" v-if="data.member_type == 'P'">
+      </div>
+      <div class="col-xs-9 padding-l-0">
+        <div style="font-size: 16px; margin-bottom: 6px">
+          <span v-text="data.member_name" style="font-size: 16px; font-weight: 500"></span>
+        </div>
+        <div>
+          <span v-text="data.create_time"></span> &nbsp;
+          <span class="label"
+                :class="{'label-info':data.data_status == 'P', 'label-success':data.data_status == 'Y', 'label-warning':data.data_status == 'N'}"
+                v-text="data.data_status_text"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row margin-b-15">
+      <div class="col-xs-12 text-center">
+        <a href="javascript:" @click="onLoadMore()" v-if="isShowLoadMore == true">加载更多</a>
+        <span v-if="isShowLoadMore == false">已加载完成所有数据</span>
+      </div>
+    </div>
+
+  </div>
+  <div v-cloak class="alert alert-warning text-center margin-t-15" role="alert" v-if="dataList.length == 0">
+    未查询到相关会员申请信息！
+  </div>
+</div>
+<script src="/javascripts/view/applyList.js"></script>

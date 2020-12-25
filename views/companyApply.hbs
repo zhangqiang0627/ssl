@@ -1,0 +1,119 @@
+<div class="container margin-t-15 margin-b-15">
+  <div class="margin-b-15">
+    <h4 class="text-center">陕西省物流学会单位会员申请登记表</h4>
+  </div>
+  <form class="card" id="app">
+    <label>单位基本信息</label>
+    <div class="form-group" :class="{'has-error has-feedback': companyNameIsValid == 'N'}">
+      <input type="text" class="form-control" maxlength="100" v-model="companyName" placeholder="请填写单位名称（必填项）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="companyNameIsValid == 'N'"></span>
+      <span class="control-label" v-text="companyNameInValidMsg" v-if="companyNameIsValid == 'N'"></span>
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': companyTypeIsValid == 'N'}">
+      <div class="dropdown" style="width: 100%">
+        <button class="btn btn-default dropdown-toggle" :class="{'has-error has-feedback': companyTypeIsValid == 'N'}" style="width: 100%; text-align: left" type="button" data-toggle="dropdown">
+          <span v-text="companyTypeText"></span>
+        </button>
+        <ul class="dropdown-menu" style="width: 100%;" aria-labelledby="dropdownMenu1">
+          <li value="1"><a href="javascript:" @click="onCompanyTypeChange(1, '国有')">国有</a></li>
+          <li value="2"><a href="javascript:" @click="onCompanyTypeChange(2, '集体')">集体</a></li>
+          <li value="3"><a href="javascript:" @click="onCompanyTypeChange(3, '中外合资')">中外合资</a></li>
+          <li value="4"><a href="javascript:" @click="onCompanyTypeChange(4, '外资')">外资</a></li>
+          <li value="5"><a href="javascript:" @click="onCompanyTypeChange(5, '私营')">私营</a></li>
+          <li value="6"><a href="javascript:" @click="onCompanyTypeChange(6, '其他')">其他</a></li>
+        </ul>
+      </div>
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="companyTypeIsValid == 'N'"></span>
+      <span class="control-label" v-text="companyTypeInValidMsg" v-if="companyTypeIsValid == 'N'"></span>
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': establishDateIsValid == 'N'}">
+      <input type="text" class="form-control" maxlength="10" v-model="establishDate" placeholder="请填写单位成立时间（YYYY-MM-DD）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="establishDateIsValid == 'N'"></span>
+      <span class="control-label" v-text="establishDateInValidMsg" v-if="establishDateIsValid == 'N'"></span>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" maxlength="100" v-model="companyLeader" placeholder="请填写主管上级">
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': companyOwnerIsValid == 'N'}">
+      <input type="text" class="form-control" maxlength="100" v-model="companyOwner" placeholder="请填写法人代表（必填项）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="companyOwnerIsValid == 'N'"></span>
+      <span class="control-label" v-text="companyOwnerInValidMsg" v-if="companyOwnerIsValid == 'N'"></span>
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': cellphoneIsValid == 'N'}">
+      <input type="tel" class="form-control" maxlength="11" v-model="cellphone" placeholder="请填写单位移动电话">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="cellphoneIsValid == 'N'"></span>
+      <span class="control-label" v-text="cellphoneInValidMsg" v-if="cellphoneIsValid == 'N'"></span>
+    </div>
+    <div class="form-group">
+      <input type="tel" class="form-control" maxlength="100" v-model="companyTelephone" placeholder="请填写单位固定电话">
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': companyEmailIsValid == 'N'}">
+      <input type="email" class="form-control" maxlength="100" v-model="companyEmail" placeholder="请填写单位邮箱">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="companyEmailIsValid == 'N'"></span>
+      <span class="control-label" v-text="companyEmailInValidMsg" v-if="companyEmailIsValid == 'N'"></span>
+    </div>
+    <div class="form-group">
+      <input type="tel" class="form-control" maxlength="100" v-model="companyFax" placeholder="请填写单位传真">
+    </div>
+    <div class="form-group">
+      <input type="url" class="form-control" maxlength="100" v-model="companyHomePage" placeholder="请填写单位网址">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" maxlength="100" v-model="companyAddress" placeholder="请填写单位地址">
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': businessLicenseNumberIsValid == 'N'}">
+      <input type="text" class="form-control" maxlength="100" v-model="businessLicenseNumber" placeholder="请填写营业执照编号（必填项）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="businessLicenseNumberIsValid == 'N'"></span>
+      <span class="control-label" v-text="businessLicenseNumberInValidMsg" v-if="businessLicenseNumberIsValid == 'N'"></span>
+    </div>
+    <div class="form-group">
+      <textarea class="form-control" rows="5" maxlength="100" v-model="mainBusiness" placeholder="请填写单位主营业务"></textarea>
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': staffTotalIsValid == 'N'}">
+      <input type="text" class="form-control" maxlength="100" v-model="staffTotal" placeholder="请填写单位在职员工人数">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="staffTotalIsValid == 'N'"></span>
+      <span class="control-label" v-text="staffTotalInValidMsg" v-if="staffTotalIsValid == 'N'"></span>
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': floorSpaceIsValid == 'N'}">
+      <input type="text" class="form-control" maxlength="100" v-model="floorSpace" placeholder="请填写单位在办公场所占地面积（平方米）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="floorSpaceIsValid == 'N'"></span>
+      <span class="control-label" v-text="floorSpaceInValidMsg" v-if="floorSpaceIsValid == 'N'"></span>
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': turnoverIsValid == 'N'}">
+      <input type="text" class="form-control" maxlength="100" v-model="turnover" placeholder="请填写单位年营业额（万元）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="turnoverIsValid == 'N'"></span>
+      <span class="control-label" v-text="turnoverInValidMsg" v-if="turnoverIsValid == 'N'"></span>
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': fixedAssetsIsValid == 'N'}">
+      <input type="text" class="form-control" maxlength="100" v-model="fixedAssets" placeholder="请填写单位固定资产（万元）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="fixedAssetsIsValid == 'N'"></span>
+      <span class="control-label" v-text="fixedAssetsInValidMsg" v-if="fixedAssetsIsValid == 'N'"></span>
+    </div>
+    <div class="margin-t-15"></div>
+    <label>单位联系人信息</label>
+    <div class="form-group" :class="{'has-error has-feedback': contactsNameIsValid == 'N'}">
+      <input type="text" class="form-control" maxlength="100" v-model="contactsName" placeholder="请填写联系人名称（必填项）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="contactsNameIsValid == 'N'"></span>
+      <span class="control-label" v-text="contactsNameInValidMsg" v-if="contactsNameIsValid == 'N'"></span>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" maxlength="100" v-model="contactsTitle" placeholder="请填写联系人职务">
+    </div>
+    <div class="form-group">
+      <input type="tel" class="form-control" maxlength="100" v-model="contactsTell" placeholder="请填写联系人电话">
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': contactsCellphoneIsValid == 'N'}">
+      <input type="tel" class="form-control" maxlength="11" v-model="contactsCellphone" placeholder="请填写联系人手机（必填项）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="contactsCellphoneIsValid == 'N'"></span>
+      <span class="control-label" v-text="contactsCellphoneInValidMsg" v-if="contactsCellphoneIsValid == 'N'"></span>
+    </div>
+    <div class="form-group" :class="{'has-error has-feedback': contactsEmailIsValid == 'N'}">
+      <input type="email" class="form-control" maxlength="100" v-model="contactsEmail" placeholder="请填写联系人电子邮件">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="contactsEmailIsValid == 'N'"></span>
+      <span class="control-label" v-text="contactsEmailInValidMsg" v-if="contactsEmailIsValid == 'N'"></span>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-block" id="btnSubmit" data-loading-text="提交中..." @click="onSubmit()">提交申请</button>
+  </form>
+</div>
+<script src="/javascripts/view/companyApply.js"></script>
