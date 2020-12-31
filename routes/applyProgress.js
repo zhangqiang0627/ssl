@@ -1,6 +1,7 @@
 let express = require('express');
 let sqlCommand = require('../service/sqlCommand');
 let mysql = require('../data/mysql');
+let logger = require('../service/logger');
 let router = express.Router();
 
 router.get('/', function(req, res, next) {
@@ -17,6 +18,7 @@ router.get('/search', function(req, res, next) {
     sql = sqlCommand.searchPersonalMemberSql(content);
   }
   mysql.query(sql, function (err,result,fields) {
+    logger.error(err);
     res.json({
       err: err,
       result: result
