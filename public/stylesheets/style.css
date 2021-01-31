@@ -58,3 +58,6 @@ body {
 .padding-b-15 {
 	padding-bottom: 15px;
 }
+.pc-center{
+	max-width: 600px;
+}

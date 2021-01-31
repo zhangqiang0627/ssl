@@ -10,6 +10,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/search', function(req, res, next) {
   let memberType = req.query.memberType;
+  let status = req.query.status;
   let content = req.query.content;
   let pageNumber = parseInt(req.query.pageNumber);
   let pageSize = 10;
@@ -17,13 +18,13 @@ router.get('/search', function(req, res, next) {
   let sql = '';
   switch (memberType) {
     case 'A':
-      sql = sqlCommand.searchApplyListSql(startIndex, pageSize);
+      sql = sqlCommand.searchApplyListSql(startIndex, pageSize, status);
       break;
     case 'C':
-      sql = sqlCommand.searchCompanyMemberListSql(startIndex, pageSize, content);
+      sql = sqlCommand.searchCompanyMemberListSql(startIndex, pageSize, content, status);
       break;
     case 'P':
-      sql = sqlCommand.searchPersonalMemberListSql(startIndex, pageSize, content);
+      sql = sqlCommand.searchPersonalMemberListSql(startIndex, pageSize, content, status);
       break;
   }
   mysql.query(sql, function (err,result,fields) {

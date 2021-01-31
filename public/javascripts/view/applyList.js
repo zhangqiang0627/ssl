@@ -2,7 +2,9 @@ let app = new Vue({
   el: "#app",
   data: {
     memberType: 'A',// A:全部 C:单位会员 P:个人会员
-    memberTypeText: '全部',
+    memberTypeText: '全部会员',
+    statusCode: 'A',
+    statusText: '全部状态',
     placeholder: '',
     searchContent: '',
     dataList: [],
@@ -41,6 +43,7 @@ let app = new Vue({
       axios.get('/cms/apply/list/search'
           .concat(`?pageNumber=${this.pageNumber}`)
           .concat(`&memberType=${this.memberType}`)
+          .concat(`&status=${this.statusCode}`)
           .concat(`&content=${this.searchContent}`))
           .then(res => {
             if (res.data.err) {
@@ -71,6 +74,16 @@ let app = new Vue({
       }
       this.memberType = code;
       this.memberTypeText = text;
+      this.searchContent = '';
+      this.resetData();
+      this.searchList();
+    },
+    onStatusChange: function (code, text) {
+      if (code === this.statusCode) {
+        return false;
+      }
+      this.statusCode = code;
+      this.statusText = text;
       this.searchContent = '';
       this.resetData();
       this.searchList();

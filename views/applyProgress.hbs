@@ -11,14 +11,19 @@
         <input type="radio" name="member-type" value="P" v-model="memberType" @click="onMemberType('P')"> 个人会员
       </label>
     </div>
+
     <div class="form-group">
-      <input type="search"
-             class="form-control"
-             maxlength="100"
-             v-model="searchContent"
-             @keyup.13="onSearch"
-             :placeholder="memberType == 'C'? '请输入营业执照编号' : '请输入手机号码'">
+      <div class="input-group">
+        <input type="search"
+               class="form-control"
+               maxlength="100"
+               v-model="searchContent"
+               @keyup.13="onSearch"
+               :placeholder="memberType == 'C'? '营业执照编号｜单位全程' : '手机号码｜身份证号码'">
+        <div class="input-group-addon" @click="onSearch">查询</div>
+      </div>
     </div>
+
     <div v-cloak class="alert alert-warning" role="alert" v-if="isShowAlert == true">
       未查询到符合条件的会员申请信息！
     </div>
@@ -48,10 +53,14 @@
         <span class="label"
               :class="{'label-info':companyInfo.data_status == 'P', 'label-success':companyInfo.data_status == 'Y', 'label-warning':companyInfo.data_status == 'N'}"
               v-text="companyInfo.data_status_text"></span>
+        <p class="margin-t-15" v-if="companyInfo.data_status == 'N'" style="color: #f0ad4e;">
+          若有疑问请咨询陕西省物流学会会员管理部。
+          Email: sslhuiyuan@163.com
+        </p>
       </div>
-<!--      <div class="form-group">-->
-<!--        <a href="#">证书下载</a>-->
-<!--      </div>-->
+      <div class="form-group" v-if="companyInfo.data_status == 'Y'">
+        <a href="javascript:" @click="onShowCertification()">查看证书</a>
+      </div>
     </div>
     <div v-cloak class="personal-member" v-if="memberType == 'P' && isShowDetail">
       <div class="form-group">
@@ -75,10 +84,14 @@
         <span class="label"
               :class="{'label-info':personalInfo.data_status == 'P', 'label-success':personalInfo.data_status == 'Y', 'label-warning':personalInfo.data_status == 'N'}"
               v-text="personalInfo.data_status_text"></span>
+        <p class="margin-t-15" v-if="personalInfo.data_status == 'N'" style="color: #f0ad4e;">
+          若有疑问请咨询陕西省物流学会会员管理部。
+          Email: sslhuiyuan@163.com
+        </p>
       </div>
-<!--      <div class="form-group">-->
-<!--        <a href="#">证书下载</a>-->
-<!--      </div>-->
+      <div class="form-group" v-if="personalInfo.data_status == 'Y'">
+        <a href="javascript:" @click="onShowCertification()">查看证书</a>
+      </div>
     </div>
   </div>
 </div>

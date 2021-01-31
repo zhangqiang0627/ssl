@@ -28,7 +28,10 @@ let app = new Vue({
     identityCardNo: '',
     resumeArray: [],
     resumes: '',
-    resumeIsEmpty: false
+    resumeIsEmpty: false,
+    checkedMemo: false,
+    checkedMemoIsValid: '',
+    checkedMemoInValidMsg: ''
   },
   methods: {
     initDataVerifyToDefault: function () {
@@ -133,6 +136,11 @@ let app = new Vue({
             checkResult = false;
           }
         })
+      }
+      if (!this.checkedMemo) {
+        this.checkedMemoIsValid = 'N';
+        this.checkedMemoInValidMsg = '请选择是否阅读了会员要求';
+        checkResult = false;
       }
       return checkResult;
     },

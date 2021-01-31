@@ -41,7 +41,7 @@ exports.searchCompanyMemberSql = function (content) {
        update_user,
        DATE_FORMAT(update_time, '%Y-%m-%d %H:%i:%s') AS update_time
     FROM \`ssl\`.member_company
-    WHERE business_license_number = '${content}';`;
+    WHERE business_license_number = '${content}' OR company_name = '${content}';`;
 };
 exports.searchPersonalMemberSql = function (content) {
   return `
@@ -83,7 +83,22 @@ exports.searchPersonalMemberSql = function (content) {
          update_user,
          DATE_FORMAT(update_time, '%Y-%m-%d %H:%i:%s') AS update_time
     FROM \`ssl\`.member_personage
-    WHERE cellphone = '${content}';`;
+    WHERE cellphone = '${content}' OR identity_card_no = '${content}';`;
+};
+
+exports.searchCompanyMemberCertificateNumber = function () {
+  return 'SELECT IFNULL(MAX(certificate_number), 0) + 1 AS certificate_number FROM ssl.member_company;';
+};
+exports.searchPersonalMemberCertificateNumber = function () {
+  return 'SELECT IFNULL(MAX(certificate_number), 0) + 1 AS certificate_number FROM ssl.member_personage;';
+};
+
+exports.checkCompanyMemberCertificateNumber = function (certificateNumber) {
+  return `SELECT count(1) as total_count from \`ssl\`.member_company WHERE certificate_number = ${certificateNumber};`;
+};
+
+exports.checkPersonalMemberCertificateNumber = function (certificateNumber) {
+  return `SELECT count(1) as total_count from \`ssl\`.member_personage WHERE certificate_number = ${certificateNumber};`;
 };
 
 exports.searchCompanyMemberByIDSql = function (memberID) {
@@ -120,6 +135,7 @@ exports.searchCompanyMemberByIDSql = function (memberID) {
        turnover,
        fixed_assets,
        data_status,
+       certificate_number,
        CASE WHEN data_status = 'P' THEN '待审批'
            WHEN data_status = 'Y' THEN '审批通过'
            WHEN data_status = 'N' THEN '审批未通过'
@@ -162,6 +178,7 @@ exports.searchPersonalMemberByIDSql = function (memberID) {
          identity_card_no,
          resumes,
          data_status,
+         certificate_number,
          CASE WHEN data_status = 'P' THEN '待审批'
              WHEN data_status = 'Y' THEN '审批通过'
              WHEN data_status = 'N' THEN '审批未通过'
@@ -174,7 +191,7 @@ exports.searchPersonalMemberByIDSql = function (memberID) {
     WHERE member_id = '${memberID}';`;
 };
 
-exports.searchCompanyMemberListSql = function (startIndex, pageSize, content) {
+exports.searchCompanyMemberListSql = function (startIndex, pageSize, content, status) {
   let sql = `
   SELECT member_id,
        company_name AS member_name,
@@ -208,6 +225,7 @@ exports.searchCompanyMemberListSql = function (startIndex, pageSize, content) {
        floor_space,
        turnover,
        fixed_assets,
+       certificate_number,
        data_status,
        CASE WHEN data_status = 'P' THEN '待审批'
            WHEN data_status = 'Y' THEN '审批通过'
@@ -218,15 +236,19 @@ exports.searchCompanyMemberListSql = function (startIndex, pageSize, content) {
        update_user,
        DATE_FORMAT(update_time, '%Y-%m-%d %H:%i:%s') AS update_time
     FROM \`ssl\`.member_company
+    WHERE 1=1
   `;
 
   if (content.length > 0) {
-    sql = sql + ` WHERE business_license_number = '${content}'`
+    sql = sql + ` AND business_license_number = '${content}'`
+  }
+  if (status !== 'A') {
+    sql = sql + ` AND data_status = '${status}'`
   }
   sql = sql + ` ORDER BY data_status, create_time DESC LIMIT ${startIndex}, ${pageSize}`;
   return sql;
 };
-exports.searchPersonalMemberListSql = function (startIndex, pageSize, content) {
+exports.searchPersonalMemberListSql = function (startIndex, pageSize, content, status) {
   let sql = `
   SELECT member_id,
          full_name AS member_name,
@@ -257,6 +279,7 @@ exports.searchPersonalMemberListSql = function (startIndex, pageSize, content) {
          home_address,
          identity_card_no,
          resumes,
+         certificate_number,
          data_status,
          CASE WHEN data_status = 'P' THEN '待审批'
              WHEN data_status = 'Y' THEN '审批通过'
@@ -267,9 +290,13 @@ exports.searchPersonalMemberListSql = function (startIndex, pageSize, content) {
          update_user,
          DATE_FORMAT(update_time, '%Y-%m-%d %H:%i:%s') AS update_time
     FROM \`ssl\`.member_personage
+    WHERE 1 = 1
   `;
   if (content.length > 0) {
-    sql = sql + ` WHERE cellphone = '${content}'`;
+    sql = sql + ` AND cellphone = '${content}'`;
+  }
+  if (status !== 'A') {
+    sql = sql + ` AND data_status = '${status}'`
   }
   sql = sql + ` ORDER BY data_status, create_time DESC LIMIT ${startIndex}, ${pageSize}`;
   return sql;
@@ -375,54 +402,101 @@ exports.searchAdminSql = function (account, password) {
     AND password = '${password}';
   `;
 };
-exports.searchApplyListSql = function (startIndex, pageSize) {
-  return `
-  SELECT member_id,
-        member_name,
-       member_type,
-       data_status,
-       data_status_text,
-       create_time
-  FROM
-  (
-      SELECT member_id,
-             company_name AS member_name,
-             'C' AS member_type,
+exports.searchApplyListSql = function (startIndex, pageSize, status) {
+  if (status === 'A') {
+    return `
+        SELECT member_id,
+              member_name,
+             member_type,
+             certificate_number,
              data_status,
-             CASE WHEN data_status = 'P' THEN '待审批'
-                  WHEN data_status = 'Y' THEN '审批通过'
-                  WHEN data_status = 'N' THEN '审批未通过'
-             END AS data_status_text,
-             DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS create_time
-      FROM \`ssl\`.member_company
-      UNION
-      SELECT member_id,
-            full_name AS member_name,
-         'P' AS member_type,
-         data_status,
-         CASE WHEN data_status = 'P' THEN '待审批'
-               WHEN data_status = 'Y' THEN '审批通过'
-               WHEN data_status = 'N' THEN '审批未通过'
-         END AS data_status_text,
-         DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS create_time
-      FROM \`ssl\`.member_personage
-  ) a
-  ORDER BY data_status, create_time DESC
-  LIMIT ${startIndex}, ${pageSize};
-  `;
+             data_status_text,
+             create_time
+        FROM
+        (
+            SELECT member_id,
+                   company_name AS member_name,
+                   'C' AS member_type,
+                   certificate_number,
+                   data_status,
+                   CASE WHEN data_status = 'P' THEN '待审批'
+                        WHEN data_status = 'Y' THEN '审批通过'
+                        WHEN data_status = 'N' THEN '审批未通过'
+                   END AS data_status_text,
+                   DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS create_time
+            FROM \`ssl\`.member_company
+            UNION
+            SELECT member_id,
+                  full_name AS member_name,
+               'P' AS member_type,
+               certificate_number,
+               data_status,
+               CASE WHEN data_status = 'P' THEN '待审批'
+                     WHEN data_status = 'Y' THEN '审批通过'
+                     WHEN data_status = 'N' THEN '审批未通过'
+               END AS data_status_text,
+               DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS create_time
+            FROM \`ssl\`.member_personage
+        ) a
+        ORDER BY data_status, create_time DESC
+        LIMIT ${startIndex}, ${pageSize};
+        `;
+  }
+
+  return `
+        SELECT member_id,
+              member_name,
+             member_type,
+             certificate_number,
+             data_status,
+             data_status_text,
+             create_time
+        FROM
+        (
+            SELECT member_id,
+                   company_name AS member_name,
+                   'C' AS member_type,
+                   certificate_number,
+                   data_status,
+                   CASE WHEN data_status = 'P' THEN '待审批'
+                        WHEN data_status = 'Y' THEN '审批通过'
+                        WHEN data_status = 'N' THEN '审批未通过'
+                   END AS data_status_text,
+                   DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS create_time
+            FROM \`ssl\`.member_company
+            WHERE data_status = '${status}'
+            UNION
+            SELECT member_id,
+                  full_name AS member_name,
+               'P' AS member_type,
+               certificate_number,
+               data_status,
+               CASE WHEN data_status = 'P' THEN '待审批'
+                     WHEN data_status = 'Y' THEN '审批通过'
+                     WHEN data_status = 'N' THEN '审批未通过'
+               END AS data_status_text,
+               DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS create_time
+            FROM \`ssl\`.member_personage
+            WHERE data_status = '${status}'
+        ) a
+        ORDER BY data_status, create_time DESC
+        LIMIT ${startIndex}, ${pageSize};
+        `;
 };
 
 exports.changeCompanyMemberStatusSql = function () {
   return `
     UPDATE \`ssl\`.member_company
-    SET data_status = ?
+    SET data_status = ?,
+    certificate_number = ?
     WHERE member_id = ?;
   `;
 };
 exports.changePersonalMemberStatusSql = function () {
   return `
     UPDATE \`ssl\`.member_personage
-    SET data_status = ?
+    SET data_status = ?,
+    certificate_number = ?
     WHERE member_id = ?;
   `;
 };

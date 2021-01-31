@@ -3,13 +3,13 @@
     <h4 class="text-center" v-text="title"></h4>
   </div>
   <div class="card">
-    <div v-cloak class="company-member border-bottom-dashed" v-if="memberType == 'C'">
+    <div v-cloak class="company-member border-bottom-dashed-" v-if="memberType == 'C'">
       <label class="margin-b-15">基本信息</label>
       <div class="form-group">
         <span>状态：</span>
         <span class="label"
-              :class="{'label-info':companyInfo.data_status == 'P', 'label-success':companyInfo.data_status == 'Y', 'label-warning':companyInfo.data_status == 'N'}"
-              v-text="companyInfo.data_status_text"></span>
+              :class="{'label-info':dataStatus == 'P', 'label-success':dataStatus == 'Y', 'label-warning':dataStatus == 'N'}"
+              v-text="dataStatusText"></span>
       </div>
       <div class="form-group">
         <span>单位名称：</span>
@@ -102,13 +102,13 @@
         <span v-text="companyInfo.contacts_email"></span>
       </div>
     </div>
-    <div v-cloak class="personal-member border-bottom-dashed" v-if="memberType == 'P'">
+    <div v-cloak class="personal-member border-bottom-dashed-" v-if="memberType == 'P'">
       <label class="margin-b-15">基本信息</label>
       <div class="form-group">
         <span>状态：</span>
         <span class="label"
-              :class="{'label-info':personalInfo.data_status == 'P', 'label-success':personalInfo.data_status == 'Y', 'label-warning':personalInfo.data_status == 'N'}"
-              v-text="personalInfo.data_status_text"></span>
+              :class="{'label-info':dataStatus == 'P', 'label-success':dataStatus == 'Y', 'label-warning':dataStatus == 'N'}"
+              v-text="dataStatusText"></span>
       </div>
       <div class="form-group">
         <span>姓名：</span>
@@ -179,12 +179,34 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-xs-6">
-        <button type="button" class="btn btn-danger btn-block" :disabled="dataStatus == 'N'" @click="onApprove('N')">驳回</button>
+
+    <div style="border-bottom: 1px dashed #cccccc; padding-bottom: 15px">
+      <form class="form-inline">
+        <div class="form-group" :class="{'has-error has-feedback': certificateNumberIsValid == 'N'}">
+          <label for="certificateNumber">证书编号：</label>
+          <div class="input-group">
+            <div class="input-group-addon" v-text="certificateNumberPrefix"></div>
+            <input type="text" class="form-control" id="certificateNumber" maxlength="4" v-model="certificateNumber" :readonly="dataStatus == 'Y'">
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="certificateNumberIsValid == 'N'"></span>
+          </div>
+          <span class="control-label" v-text="certificateNumberInValidMsg" v-if="certificateNumberIsValid == 'N'"></span>
+          <a href="javascript:" v-if="dataStatus == 'Y'" style="margin-left: 15px" @click="onShowCertificate()">查看证书</a>
+        </div>
+      </form>
+    </div>
+
+
+
+    <div class="row margin-t-15">
+      <div class="col-xs-3">
+        <button type="button" class="btn btn-default btn-block" @click="onBack()">返回</button>
       </div>
-      <div class="col-xs-6">
-        <button type="button" class="btn btn-success btn-block" :disabled="dataStatus == 'Y'"  @click="onApprove('Y')">通过</button>
+      <div class="col-xs-3"></div>
+      <div class="col-xs-3">
+        <button type="button" class="btn btn-danger btn-block" :disabled="dataStatus == 'N'" @click="onReject()">驳回</button>
+      </div>
+      <div class="col-xs-3">
+        <button type="button" class="btn btn-success btn-block" :disabled="dataStatus == 'Y'"  @click="onApprove()">通过</button>
       </div>
     </div>
   </div>

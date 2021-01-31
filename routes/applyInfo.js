@@ -12,6 +12,41 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/certificateNumber', function(req, res, next) {
+  let memberType = req.query.memberType;
+  let sql = '';
+  if (memberType === 'C') {
+    sql = sqlCommand.searchCompanyMemberCertificateNumber();
+  } else {
+    sql = sqlCommand.searchPersonalMemberCertificateNumber();
+  }
+  mysql.query(sql, function (err,result,fields) {
+    logger.error(err);
+    res.json({
+      err: err,
+      result: result
+    });
+  })
+});
+
+router.get('/check/certificateNumber', function(req, res, next) {
+  let memberType = req.query.memberType;
+  let certificateNumber = req.query.certificateNumber;
+  let sql = '';
+  if (memberType === 'C') {
+    sql = sqlCommand.checkCompanyMemberCertificateNumber(certificateNumber);
+  } else {
+    sql = sqlCommand.checkPersonalMemberCertificateNumber(certificateNumber);
+  }
+  mysql.query(sql, function (err,result,fields) {
+    logger.error(err);
+    res.json({
+      err: err,
+      result: result
+    });
+  })
+});
+
 router.get('/search', function(req, res, next) {
   let memberType = req.query.memberType;
   let memberID = req.query.memberID;
@@ -33,8 +68,9 @@ router.get('/search', function(req, res, next) {
 router.put('/approve', function (req, res, next) {
   let memberType = req.body.memberType;
   let memberID = req.body.memberID;
+  let certificateNumber = req.body.certificateNumber === undefined ? 0 : req.body.certificateNumber;
   let status = req.body.status;
-  let parameters = [status, memberID];
+  let parameters = [status, certificateNumber, memberID];
   let sql = '';
   if (memberType === 'C') {
     sql = sqlCommand.changeCompanyMemberStatusSql();

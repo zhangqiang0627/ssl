@@ -1,0 +1,17 @@
+<link rel='stylesheet' href='/stylesheets/certificate-cell.css'/>
+<div id="app">
+  <span class="member-type-ch" v-text="memberChooseZh"></span>
+  <span class="member-type-en" v-text="memberChooseEn"></span>
+
+  <span class="member-name-ch" v-text="memberNameZh"></span>
+<!--  <span class="member-name-en" v-text="memberNameEn"></span>-->
+
+  <span class="certificate-number" v-text="certificateNumber"></span>
+  <span class="valid-date" v-text="validDate"></span>
+  <div class="certificate-img">
+    <img src="/images/certificate.png" class="img-responsive" alt="">
+  </div>
+</div>
+<input type="hidden" value="{{memberType}}" id="hidden_memberType">
+<input type="hidden" value="{{memberID}}" id="hidden_memberID">
+<script src="/javascripts/view/certificate.js"></script>

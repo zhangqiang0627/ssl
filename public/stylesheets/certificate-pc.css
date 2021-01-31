@@ -1,0 +1,54 @@
+.member-type-ch {
+  position: absolute;
+  left: 50%;
+  top:38%;
+  transform: translate(-50%,-50%);
+  font-size: 3rem;
+  color: #654102;
+  font-weight: bolder;
+}
+.member-type-en {
+  position: absolute;
+  left: 50%;
+  top:42%;
+  transform: translate(-50%,-50%);
+  font-size: 1.5rem;
+  color: #654102;
+}
+.member-name-ch {
+  position: absolute;
+  left: 50%;
+  top:48%;
+  transform: translate(-50%,-50%);
+  font-size: 3rem;
+  color: #654102;
+  font-weight: bolder;
+}
+.member-name-en {
+  position: absolute;
+  left: 50%;
+  top:52%;
+  transform: translate(-50%,-50%);
+  font-size: 1.5rem;
+  color: #654102;
+}
+.certificate-number {
+  position: absolute;
+  left: 50%;
+  top:65.4%;
+  transform: translate(-50%,-50%);
+  font-size: 1rem;
+  color: #71706f;
+}
+.certificate-img {
+  max-width: 600px;
+  margin: 0 auto
+}
+.valid-date {
+  position: absolute;
+  left: 53%;
+  top: 69.2%;
+  transform: translate(-50%,-50%);
+  font-size: 1rem;
+  color: #71706f;
+}

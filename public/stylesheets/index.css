@@ -5,6 +5,9 @@
 .title {
 	font-size: 2rem;
 	font-weight: bolder;
-	margin-top: 2rem;
-	color: #eafaff;
+	margin-top: 3rem;
+	color: #0faee0;
+}
+body{
+	background-color: #ffffff;
 }

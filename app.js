@@ -9,6 +9,8 @@ var companyApply = require('./routes/companyApply');
 var personalApply = require('./routes/personalApply.js');
 var applyComplete = require('./routes/applyComplete');
 var applyProgress = require('./routes/applyProgress');
+var certificate4PC = require('./routes/certificate4PC');
+var certificate4Cell = require('./routes/certificate4Cell');
 
 
 var login = require('./routes/login');
@@ -36,6 +38,8 @@ app.use('/apply/progress', applyProgress);
 app.use('/cms/login', login);
 app.use('/cms/apply/list', applyList);
 app.use('/cms/apply/info', applyInfo);
+app.use('/certificate/pc', certificate4PC);
+app.use('/certificate/cell', certificate4Cell);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

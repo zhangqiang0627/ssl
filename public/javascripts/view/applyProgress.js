@@ -2,6 +2,7 @@ let applyProgress = new Vue({
   el: "#app",
   data: {
     memberType: 'C',// C:单位会员 P:个人会员
+    memberID: 0,
     placeholder: '',
     searchContent: '',
     companyInfo: {},
@@ -15,10 +16,13 @@ let applyProgress = new Vue({
     },
     setPageType: function () {
       if (this.memberType === 'C') {
-        this.placeholder = '请输入营业执照编号';
+        this.placeholder = '营业执照编号｜单位全程';
       } else {
-        this.placeholder = '请输入手机号码';
+        this.placeholder = '手机号码｜身份证号码';
       }
+    },
+    onShowCertification: function () {
+      location.href = `/certificate/cell?memberType=${this.memberType}&memberID=${this.memberID}`;
     },
     searchInfo: function () {
       axios.get('/apply/progress/search'
@@ -31,6 +35,7 @@ let applyProgress = new Vue({
         }
         this.isShowAlert = res.data.result.length === 0;
         this.isShowDetail = res.data.result.length > 0;
+        this.memberID = res.data.result.length > 0 ? res.data.result[0].member_id : 0;
         if (this.memberType === 'C') {
           this.companyInfo = res.data.result.length > 0 ? res.data.result[0] : {};
         } else {
