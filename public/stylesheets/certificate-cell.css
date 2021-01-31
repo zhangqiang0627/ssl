@@ -1,7 +1,7 @@
 .member-type-ch {
   position: absolute;
   left: 50%;
-  top:33%;
+  top:30%;
   transform: translate(-50%,-50%);
   font-size: 3rem;
   color: #654102;
@@ -10,7 +10,7 @@
 .member-type-en {
   position: absolute;
   left: 50%;
-  top:39%;
+  top:36%;
   transform: translate(-50%,-50%);
   font-size: 1.4rem;
   color: #654102;
@@ -20,11 +20,13 @@
 .member-name-ch {
   position: absolute;
   left: 50%;
-  top:47%;
+  top:43%;
   transform: translate(-50%,-50%);
-  font-size: 3rem;
+  font-size: 2.3rem;
   color: #654102;
   font-weight: bolder;
+  width: 100%;
+  text-align: center;
 }
 .member-name-en {
   position: absolute;
@@ -36,8 +38,8 @@
 }
 .certificate-number {
   position: absolute;
-  left: 51%;
-  top:57.5%;
+  left: 51.5%;
+  top:51.6%;
   transform: translate(-50%,-50%);
   font-size: 1rem;
   color: #71706f;
@@ -48,8 +50,8 @@
 }
 .valid-date {
   position: absolute;
-  left: 61%;
-  top: 60.7%;
+  left: 62%;
+  top: 54.5%;
   transform: translate(-50%,-50%);
   font-size: 1rem;
   color: #71706f;
