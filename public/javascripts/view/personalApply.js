@@ -4,6 +4,11 @@ let app = new Vue({
     fullName: '',
     fullNameIsValid: '',
     fullNameInValidMsg: '',
+
+    fullNameEn: '',
+    fullNameEnIsValid: '',
+    fullNameEnInValidMsg: '',
+
     sex: '',
     sexIsValid: '',
     sexInValidMsg: '',
@@ -37,6 +42,8 @@ let app = new Vue({
     initDataVerifyToDefault: function () {
       this.fullNameIsValid = '';
       this.fullNameInValidMsg = '';
+      this.fullNameEnIsValid = '';
+      this.fullNameEnInValidMsg = '';
       this.sexIsValid = '';
       this.sexInValidMsg = '';
       this.educationLevelIsValid = '';
@@ -86,6 +93,11 @@ let app = new Vue({
       if (dataVerify.isEmpty(this.fullName)) {
         this.fullNameIsValid = 'N';
         this.fullNameInValidMsg = '请填写您的姓名';
+        checkResult = false;
+      }
+      if (dataVerify.isEmpty(this.fullNameEn)) {
+        this.fullNameEnIsValid = 'N';
+        this.fullNameEnInValidMsg = '请填写您的姓名(拼音大写)';
         checkResult = false;
       }
       if (dataVerify.isEmpty(this.sex)) {
@@ -174,6 +186,7 @@ let app = new Vue({
             }
             axios.post('/apply/personal/add', {
               fullName: this.fullName,
+              fullNameEn: this.fullNameEn,
               sex: this.sex,
               educationLevel: this.educationLevel,
               cellphone: this.cellphone,

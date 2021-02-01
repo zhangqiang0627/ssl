@@ -12,6 +12,7 @@ router.post('/add', function(req, res, next) {
   let sql = sqlCommand.insertPersonalMemberSql();
   let parameters = [
     req.body.fullName,
+    req.body.fullNameEn,
     req.body.sex,
     req.body.politicsType,
     req.body.educationLevel,

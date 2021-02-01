@@ -4,6 +4,12 @@ let app = new Vue({
     companyName: '',
     companyNameIsValid: '',
     companyNameInValidMsg: '',
+
+    companyNameEn: '',
+    companyNameEnIsValid: '',
+    companyNameEnInValidMsg: '',
+
+
     companyType: '',
     companyTypeIsValid: '',
     companyTypeInValidMsg: '',
@@ -61,6 +67,10 @@ let app = new Vue({
     initDataVerifyToDefault: function () {
       this.companyNameIsValid = '';
       this.companyNameInValidMsg = '';
+
+      this.companyNameEnIsValid = '';
+      this.companyNameEnInValidMsg = '';
+
       this.companyTypeIsValid = '';
       this.companyTypeInValidMsg = '';
       this.companyOwnerIsValid = '';
@@ -96,6 +106,11 @@ let app = new Vue({
       if (dataVerify.isEmpty(this.companyName)) {
         this.companyNameIsValid = 'N';
         this.companyNameInValidMsg = '请填写单位名称';
+        checkResult = false;
+      }
+      if (dataVerify.isEmpty(this.companyNameEn)) {
+        this.companyNameEnIsValid = 'N';
+        this.companyNameEnInValidMsg = '请填写单位英文名称';
         checkResult = false;
       }
       if (dataVerify.isEmpty(this.companyType)) {
@@ -196,6 +211,7 @@ let app = new Vue({
 
             axios.post('/apply/company/add', {
               companyName: this.companyName,
+              companyNameEn: this.companyNameEn,
               companyType: this.companyType,
               establishDate: this.establishDate,
               companyLeader: this.companyLeader,

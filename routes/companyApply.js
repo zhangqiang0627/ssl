@@ -12,6 +12,7 @@ router.post('/add', function(req, res, next) {
   let sql = sqlCommand.insertCompanyMemberSql();
   let parameters = [
       req.body.companyName,
+      req.body.companyNameEn,
       req.body.companyType,
       req.body.establishDate,
       req.body.companyLeader,

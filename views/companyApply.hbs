@@ -9,6 +9,13 @@
       <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="companyNameIsValid == 'N'"></span>
       <span class="control-label" v-text="companyNameInValidMsg" v-if="companyNameIsValid == 'N'"></span>
     </div>
+
+    <div class="form-group" :class="{'has-error has-feedback': companyNameEnIsValid == 'N'}">
+      <input type="text" class="form-control" maxlength="100" v-model="companyNameEn" placeholder="请填写单位英文名称（必填项）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="companyNameEnIsValid == 'N'"></span>
+      <span class="control-label" v-text="companyNameEnInValidMsg" v-if="companyNameEnIsValid == 'N'"></span>
+    </div>
+
     <div class="form-group" :class="{'has-error has-feedback': companyTypeIsValid == 'N'}">
       <div class="dropdown" style="width: 100%">
         <button class="btn btn-default dropdown-toggle" :class="{'has-error has-feedback': companyTypeIsValid == 'N'}" style="width: 100%; text-align: left" type="button" data-toggle="dropdown">

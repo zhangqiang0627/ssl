@@ -105,6 +105,7 @@ exports.searchCompanyMemberByIDSql = function (memberID) {
   return `
     SELECT member_id,
        company_name,
+       company_name_en,
        company_type,
        CASE WHEN company_type = '1' THEN '国有'
            WHEN company_type = '2' THEN '集体'
@@ -151,6 +152,7 @@ exports.searchPersonalMemberByIDSql = function (memberID) {
   return `
     SELECT member_id,
          full_name,
+         full_name_en,
          sex,
          CASE WHEN sex = 'M' THEN '男'
            WHEN sex = 'F' THEN '女'
@@ -307,6 +309,7 @@ exports.insertCompanyMemberSql = function () {
   INSERT INTO \`ssl\`.member_company
   (
       company_name,
+      company_name_en,
       company_type,
       establish_date,
       company_leader,
@@ -354,6 +357,7 @@ exports.insertCompanyMemberSql = function () {
       ?,
       ?,
       ?,
+      ?,
       ?
   );`;
 }
@@ -362,6 +366,7 @@ exports.insertPersonalMemberSql = function () {
   INSERT INTO \`ssl\`.member_personage
   (
       full_name,
+      full_name_en,
       sex,
       politics_type,
       education_level,
@@ -377,6 +382,7 @@ exports.insertPersonalMemberSql = function () {
   )
   VALUES
   (
+      ?,
       ?,
       ?,
       ?,

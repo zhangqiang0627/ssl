@@ -44,11 +44,13 @@ let app = new Vue({
               that.memberChooseZh = '会长单位';
               that.memberChooseEn = 'CORPORATION OF PRESIDENT';
               that.memberNameZh = res.data.result[0].company_name;
+              that.memberNameEn = res.data.result[0].company_name_en;
               that.certificateNumber = 'SSL-DW-' + res.data.result[0].certificate_number.toString().padStart(4, '0');
             } else {
               that.memberChooseZh = '常务理事';
               that.memberChooseEn = 'EXECUTIVE MEMBER OF THE COUNCIL';
               that.memberNameZh = res.data.result[0].full_name;
+              that.memberNameEn = res.data.result[0].full_name_en;
               that.certificateNumber = 'SSL-GR-' + res.data.result[0].certificate_number.toString().padStart(4, '0');
             }
           })

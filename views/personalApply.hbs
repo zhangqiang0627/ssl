@@ -8,6 +8,11 @@
       <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="fullNameIsValid == 'N'"></span>
       <span class="control-label" v-text="fullNameInValidMsg" v-if="fullNameIsValid == 'N'"></span>
     </div>
+    <div class="form-group" :class="{'has-error has-feedback': fullNameEnIsValid == 'N'}">
+      <input type="text" class="form-control" maxlength="100" v-model="fullNameEn" placeholder="请填写您的姓名（拼音大写，必填项）">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" v-if="fullNameEnIsValid == 'N'"></span>
+      <span class="control-label" v-text="fullNameEnInValidMsg" v-if="fullNameEnIsValid == 'N'"></span>
+    </div>
     <div class="form-group" :class="{'has-error has-feedback': sexIsValid == 'N'}">
       <div class="dropdown" style="width: 100%">
         <button class="btn btn-default dropdown-toggle" :class="{'has-error has-feedback': sexIsValid == 'N'}" style="width: 100%; text-align: left" type="button" data-toggle="dropdown">

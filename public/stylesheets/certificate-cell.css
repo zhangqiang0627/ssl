@@ -10,7 +10,7 @@
 .member-type-en {
   position: absolute;
   left: 50%;
-  top:36%;
+  top:35%;
   transform: translate(-50%,-50%);
   font-size: 1.4rem;
   color: #654102;
@@ -20,7 +20,7 @@
 .member-name-ch {
   position: absolute;
   left: 50%;
-  top:43%;
+  top:41%;
   transform: translate(-50%,-50%);
   font-size: 2.3rem;
   color: #654102;
@@ -31,7 +31,7 @@
 .member-name-en {
   position: absolute;
   left: 50%;
-  top:52%;
+  top:45%;
   transform: translate(-50%,-50%);
   font-size: 1.5rem;
   color: #654102;
